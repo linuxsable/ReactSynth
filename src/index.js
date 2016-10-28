@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Synth from './components/Synth/Synth'
 import './index.css';
 
 ReactDOM.render(
-  <App />,
+  <Synth />,
   document.getElementById('root')
 );
