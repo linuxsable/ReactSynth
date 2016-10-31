@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
+import Keys from '../../lib/Keys';
 
 class SequenceValue extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      value: this.props.engine.CMajScale[0]
-    }
+      value: props.seqValues[props.index]
+    };
   }
 
   handleChange = (e) => {
-    const value = parseInt(e.target.value);
-    this.props.onChange(value, this.props.index);
+    const value = parseFloat(e.target.value);
     this.setState({ value: value });
+    this.props.onChange(value, this.props.index);
   }
 
   render() {
-    const options = Object.keys(this.props.engine.CMajScale).map((note, index) =>
-      <option key={note} value={parseInt(this.props.engine.CMajScale[note])}>{note}</option>
+    const notes = Object.values(Keys.key(this.props.seqKey));
+    const options = notes.map((note, index) =>
+      <option key={index} value={notes[index]}>{Keys.getNoteNameByFreq(note)}</option>
     );
 
     return (

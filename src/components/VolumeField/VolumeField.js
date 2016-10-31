@@ -5,6 +5,7 @@ class VolumeField extends Component {
     super(props);
 
     this.state = {
+      value: this.props.defaultValue,
       options: [0, 25, 50, 75, 100].reverse()
     };
   }

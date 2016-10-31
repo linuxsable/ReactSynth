@@ -12,12 +12,13 @@ class Sequencer extends Component {
   }
 
   render() {
-    const numSteps = this.props.engine.seqNumSteps;
+    const numSteps = this.props.seqTotalSteps;
     const sequenceItems = Array(numSteps).fill(null).map((value, index) =>
       <SequenceValue
         key={index}
         index={index}
-        engine={this.props.engine}
+        seqValues={this.props.seqValues}
+        seqKey={this.props.seqKey}
         onChange={this.handleSequenceValueChange} />
     );
 

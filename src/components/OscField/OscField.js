@@ -5,7 +5,8 @@ class OscField extends Component {
     super(props);
 
     this.state = {
-      options: this.props.engine.oscTypes
+      value: this.props.value,
+      options: this.props.oscTypes
     };
   }
 
@@ -16,8 +17,8 @@ class OscField extends Component {
   }
 
   render() {
-    const options = Object.keys(this.state.options).map((type, index) =>
-      <option key={type} value={this.state.options[index]}>{type}</option>
+    const options = this.state.options.map((type, index) =>
+      <option key={type} value={type}>{type}</option>
     );
 
     return (
