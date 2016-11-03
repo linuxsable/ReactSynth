@@ -1,1 +1,1 @@
-## Demo: [linuxsable.github.io/ReactSynth/index.html](linuxsable.github.io/ReactSynth/index.html)
+## Demo: [http://linuxsable.github.io/ReactSynth/index.html](http://linuxsable.github.io/ReactSynth/index.html)
