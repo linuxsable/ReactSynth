@@ -8,13 +8,11 @@ class Sequencer extends Component {
 
   render() {
     return (
-      <fieldset className="sequencer">
-        <legend>Sequencer</legend>
-        <SequencerMatrix
-          seqNotes={this.props.seqNotes}
-          seqMatrix={this.props.seqMatrix}
-          handleCellClicked={this.handleCellClicked} />
-      </fieldset>
+      <SequencerMatrix
+        seqNotes={this.props.seqNotes}
+        seqMatrix={this.props.seqMatrix}
+        seqCurrentStep={this.props.seqCurrentStep}
+        handleCellClicked={this.handleCellClicked} />
     );
   }
 }

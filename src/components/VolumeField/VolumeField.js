@@ -18,14 +18,11 @@ class VolumeField extends Component {
 
   render() {
     return (
-      <fieldset>
-        <legend>Volume</legend>
-        <select value={this.state.value} onChange={this.handleChange}>
-          {this.state.options.map((num) =>
-            <option key={num} value={num}>{num}%</option>
-          )}
-        </select>
-      </fieldset>
+      <select value={this.state.value} onChange={this.handleChange}>
+        {this.state.options.map((num) =>
+          <option key={num} value={num}>{num}%</option>
+        )}
+      </select>
     );
   }
 }

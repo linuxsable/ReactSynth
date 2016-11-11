@@ -11,20 +11,19 @@ class MatrixValue extends Component {
 
   handleClick = (e) => {
     const newValue = !this.state.on;
-
     this.setState({ 'on':  newValue });
     this.props.handleCellClicked(newValue, this.props.y);
+  }
 
-    if (newValue) {
-      e.currentTarget.style.backgroundColor = 'red';
-    } else {
-      e.currentTarget.style.backgroundColor = '#ccc';
-    }
+  getClassName() {
+    return this.state.on ? 'matrix-value selected' : 'matrix-value';
   }
 
   render() {
     return (
-      <div className="matrix-value" onClick={this.handleClick} />
+      <div
+        className={this.getClassName()}
+        onClick={this.handleClick} />
     );
   }
 }

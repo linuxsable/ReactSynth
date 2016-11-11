@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import './Synth.css';
-
 import Keys from '../../lib/Keys';
-
 import Sequencer from '../Sequencer/Sequencer';
 import OscField from '../OscField/OscField';
 import VolumeField from '../VolumeField/VolumeField';
@@ -16,7 +13,8 @@ class Synth extends Component {
       seqKey: 'Dm',
       oscType: 'Sine',
       seqMatrix: this.createSeqMatrix(),
-      seqNotes: Object.values(Keys.key('Dm'))
+      seqNotes: Object.values(Keys.key('Dm')),
+      seqCurrentStep: 0
     };
 
     this.oscTypes = [
@@ -28,14 +26,17 @@ class Synth extends Component {
 
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     this.seqTimerId = null;
-    this.seqCurrentStep = 0;
+  }
+
+  componentWillMount() {
+    this.start();
   }
 
   // Create the matrix
   createSeqMatrix() {
     let output = [];
 
-    Array(8).fill().map((_, y) => {
+    Array(7).fill().map((_, y) => {
       output[y] = [];
 
       Array(16).fill().map((_, x) => {
@@ -80,7 +81,7 @@ class Synth extends Component {
 
     this.seqTimerId = setInterval(() => {
       const notesToPlay = this.state.seqMatrix.map((row, rowIndex) => {
-        if (row[this.seqCurrentStep]) {
+        if (row[this.state.seqCurrentStep]) {
           // We've found a selected note
           this.playNote(
             this.state.seqNotes[rowIndex],
@@ -90,10 +91,10 @@ class Synth extends Component {
         }
       });
 
-      if ((this.seqCurrentStep + 2) > this.state.seqMatrix[0].length) {
-        this.seqCurrentStep = 0;
+      if ((this.state.seqCurrentStep + 2) > this.state.seqMatrix[0].length) {
+        this.setState({ seqCurrentStep: 0 });
       } else {
-        this.seqCurrentStep++;
+        this.setState({ seqCurrentStep: this.state.seqCurrentStep + 1 });
       }
     }, 250);
   }
@@ -118,7 +119,10 @@ class Synth extends Component {
   render() {
     return (
       <div className="synth">
-        <h1>React Synth</h1>
+        <div className="logo">
+          <div className="icon"></div>
+          <div className="text">REACTSYNTH</div>
+        </div>
         <OscField
           onChange={this.handleOscTypeChange}
           oscTypes={this.oscTypes}
@@ -128,20 +132,13 @@ class Synth extends Component {
           defaultValue={this.state.volume} />
         <Sequencer
           onChange={this.handleSequencerChange}
-          seqTotalSteps={this.seqTotalSteps}
+          seqCurrentStep={this.state.seqCurrentStep}
           seqKey={this.state.seqKey}
           seqNotes={this.state.seqNotes}
           seqMatrix={this.state.seqMatrix} />
-        <fieldset>
-          <legend>Controls</legend>
-          <button name="start" onClick={this.start}>Start</button>
-          <button name="stop" onClick={this.stop}>Stop</button>
-          {/* <button name="reset" onClick={this.reset}>Reset</button> */}
-        </fieldset>
-        {/* <fieldset>
-          <legend>Debug</legend>
-          <pre>{JSON.stringify(this.state)}</pre>
-        </fieldset> */}
+
+          {/* <button name="start" onClick={this.start}>Start</button>
+          <button name="stop" onClick={this.stop}>Stop</button> */}
       </div>
     );
   }

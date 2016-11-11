@@ -22,12 +22,9 @@ class OscField extends Component {
     );
 
     return (
-      <fieldset>
-        <legend>Oscillator Type</legend>
-        <select value={this.state.value} onChange={this.handleChange}>
-          {options}
-        </select>
-      </fieldset>
+      <select value={this.state.value} onChange={this.handleChange}>
+        {options}
+      </select>
     );
   }
 }
