@@ -11,7 +11,7 @@ class Keys {
       'G': 391.995,
       'G#': 415.305,
       'A': 440,
-      'A#': 466.164,
+      'Bb': 466.164,
       'B': 493.883
     };
   }
@@ -40,7 +40,7 @@ class Keys {
           'F': notes['F'],
           'G': notes['G'],
           'A': notes['A'],
-          'A#': notes['A#'],
+          'Bb': notes['Bb'],
           'C': notes['C']
         };
 

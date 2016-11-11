@@ -35,3 +35,30 @@ fieldset legend {
 button {
   margin: 5px;
 }
+
+.matrix {
+  /*border: 1px solid #ccc;*/
+}
+
+.matrix .notes {
+  float: left;
+  margin-top: 8px;
+  margin-right: 10px;
+}
+
+.matrix .notes .note {
+  padding-bottom: 20px;
+}
+
+.matrix .row {
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.matrix .row .matrix-value {
+  width: 30px;
+  height: 30px;
+  background: #ccc;
+  margin-right: 5px;
+  float: left;
+}
