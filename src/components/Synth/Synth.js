@@ -31,6 +31,7 @@ class Synth extends Component {
     this.seqCurrentStep = 0;
   }
 
+  // Create the matrix
   createSeqMatrix() {
     let output = [];
 
