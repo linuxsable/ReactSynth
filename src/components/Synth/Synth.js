@@ -3,6 +3,8 @@ import Keys from '../../lib/Keys';
 import Sequencer from '../Sequencer/Sequencer';
 import OscField from '../OscField/OscField';
 import VolumeField from '../VolumeField/VolumeField';
+import Envelope from '../Envelope';
+import EG from '../../lib/EnvelopeGenerator';
 
 class Synth extends Component {
   constructor(props) {
@@ -11,15 +13,21 @@ class Synth extends Component {
     this.state = {
       volume: 75,
       seqKey: 'Dm',
-      oscType: 'Sine',
+      oscType: 'Sawtooth',
       seqMatrix: this.createSeqMatrix(),
       seqNotes: Object.values(Keys.key('Dm')),
-      seqCurrentStep: 0
+      seqCurrentStep: 0,
+      envelope: {
+        attack: 0.2,
+        decay: 0.5,
+        sustain: 0,
+        release: 0
+      }
     };
 
     this.oscTypes = [
-      'Sine',
       'Sawtooth',
+      'Sine',
       'Square',
       'Triangle'
     ];
@@ -61,19 +69,38 @@ class Synth extends Component {
     this.setState({ seqMatrix: newValues });
   }
 
-  playNote(frequency = Keys.notes().C, gain = 0.5, duration = 0.2) {
+  handleEnvelopeChange = (value) => {
+    this.setState({ envelope: value });
+  }
+
+  playNote(frequency = Keys.notes().C) {
     const osc = this.audioContext.createOscillator();
     const gainNode = this.audioContext.createGain();
+    const env = new EG(this.audioContext, {
+      attackTime: this.state.envelope.attack,
+      decayTime: this.state.envelope.decay,
+      sustainLevel: this.state.envelope.sustain,
+      releaseTime: this.state.envelope.release
+    });
 
     gainNode.connect(this.audioContext.destination);
-    gainNode.gain.value = gain;
+    gainNode.gain.value = 0;
 
     osc.connect(gainNode);
     osc.frequency.value = frequency;
     osc.type = this.state.oscType.toLowerCase();
 
+    env.connect(gainNode.gain);
+
     osc.start(this.audioContext.currentTime);
-    osc.stop(this.audioContext.currentTime + duration);
+    env.start(this.audioContext.currentTime);
+
+    env.release(this.audioContext.currentTime + 1);
+
+    // Stop the oscillator once the envelope has completed.
+    let stopAt = env.getReleaseCompleteTime();
+    osc.stop(stopAt);
+    env.stop(stopAt);
   }
 
   startSequence() {
@@ -84,9 +111,7 @@ class Synth extends Component {
         if (row[this.state.seqCurrentStep]) {
           // We've found a selected note
           this.playNote(
-            this.state.seqNotes[rowIndex],
-            this.state.volume * 0.001,
-            0.5
+            this.state.seqNotes[rowIndex]
           );
         }
       });
@@ -127,18 +152,18 @@ class Synth extends Component {
           onChange={this.handleOscTypeChange}
           oscTypes={this.oscTypes}
           value={this.state.oscType} />
-        <VolumeField
+        {/* <VolumeField
           onChange={this.handleVolumeChange}
-          defaultValue={this.state.volume} />
+          defaultValue={this.state.volume} /> */}
         <Sequencer
           onChange={this.handleSequencerChange}
           seqCurrentStep={this.state.seqCurrentStep}
           seqKey={this.state.seqKey}
           seqNotes={this.state.seqNotes}
           seqMatrix={this.state.seqMatrix} />
-
-          {/* <button name="start" onClick={this.start}>Start</button>
-          <button name="stop" onClick={this.stop}>Stop</button> */}
+        <Envelope
+          value={this.state.envelope}
+          onChange={this.handleEnvelopeChange} />
       </div>
     );
   }

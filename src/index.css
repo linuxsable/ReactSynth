@@ -82,3 +82,18 @@ button {
 .matrix .row .matrix-value.selected {
   background-color: #F6A623;
 }
+
+section.envelope {
+  margin-top: 10px;
+  float: right;
+}
+
+section.envelope > section {
+  padding-bottom: 5px;
+}
+
+section.envelope label {
+  color: #fff;
+  font-weight: 800;
+  padding-right: 5px;
+}
