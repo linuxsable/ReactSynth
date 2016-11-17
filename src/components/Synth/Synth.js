@@ -42,13 +42,13 @@ class Synth extends Component {
 
   // Create the matrix
   createSeqMatrix() {
-    let output = [];
+    const output = [];
 
-    Array(7).fill().map((_, y) => {
-      output[y] = [];
+    Array(16).fill().map((_, x) => {
+      output[x] = [];
 
-      Array(16).fill().map((_, x) => {
-        output[y][x] = false;
+      Array(7).fill().map((_, y) => {
+        output[x][y] = false;
       });
     });
 
@@ -107,21 +107,18 @@ class Synth extends Component {
     if (this.seqTimerId) return;
 
     this.seqTimerId = setInterval(() => {
-      const notesToPlay = this.state.seqMatrix.map((row, rowIndex) => {
-        if (row[this.state.seqCurrentStep]) {
-          // We've found a selected note
-          this.playNote(
-            this.state.seqNotes[rowIndex]
-          );
+      this.state.seqMatrix[this.state.seqCurrentStep].forEach((note, y) => {
+        if (note) {
+          this.playNote(this.state.seqNotes[y]);
         }
       });
 
-      if ((this.state.seqCurrentStep + 2) > this.state.seqMatrix[0].length) {
+      if ((this.state.seqCurrentStep + 2) > this.state.seqMatrix.length) {
         this.setState({ seqCurrentStep: 0 });
       } else {
         this.setState({ seqCurrentStep: this.state.seqCurrentStep + 1 });
       }
-    }, 250);
+    }, 300);
   }
 
   stopSequence() {

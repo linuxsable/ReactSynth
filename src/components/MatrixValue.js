@@ -12,7 +12,7 @@ class MatrixValue extends Component {
   handleClick = (e) => {
     const newValue = !this.state.on;
     this.setState({ 'on':  newValue });
-    this.props.handleCellClicked(newValue, this.props.y);
+    this.props.handleCellClicked(newValue, this.props.x, this.props.y);
   }
 
   getClassName() {
@@ -22,6 +22,8 @@ class MatrixValue extends Component {
   render() {
     return (
       <div
+        data-x={this.props.x}
+        data-y={this.props.y}
         className={this.getClassName()}
         onClick={this.handleClick} />
     );

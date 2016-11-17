@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MatrixRow from './MatrixRow';
+import MatrixValue from './MatrixValue';
 import Keys from '../lib/Keys';
 
 class SequencerMatrix extends Component {
@@ -14,12 +14,19 @@ class SequencerMatrix extends Component {
       </div>
     });
 
-    const grid = this.props.seqMatrix.map((cells, index) => {
-      return <MatrixRow
-        key={index}
-        x={index}
-        cells={cells}
-        handleCellClicked={this.handleCellClicked} />
+    const rows = this.props.seqMatrix.map((item, x) => {
+      const entry = item.map((element, y) => {
+        return (
+          <MatrixValue
+            key={y}
+            x={x}
+            y={y}
+            handleCellClicked={this.handleCellClicked}
+            seqCurrentStep={this.props.seqCurrentStep} />
+        );
+      });
+
+      return <div className="col" key={x}>{entry}</div>
     });
 
     return (
@@ -28,7 +35,7 @@ class SequencerMatrix extends Component {
           {notes}
         </div>
         <div className="grid">
-          {grid}
+          {rows}
         </div>
       </div>
     );

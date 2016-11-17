@@ -10,10 +10,10 @@ body {
 
 .logo {
   font-size: 15px;
-  font-weight: 500;
+  font-weight: bold;
   color: #fff;
-  letter-spacing: 2px;
-  width: 138px;
+  letter-spacing: 3px;
+  width: 152px;
   margin: 50px auto;
 }
 
@@ -22,7 +22,7 @@ body {
   height: 11px;
   background-color: #fff;
   float: left;
-  margin: 3px 5px 0 0;
+  margin: 3px 8px 0 0;
 }
 
 .synth {
@@ -65,21 +65,22 @@ button {
   font-weight: 600;
 }
 
-.matrix .row {
-  height: 35px;
-  margin-bottom: 12px;
+.matrix .col {
+  width: 35px;
+  margin-right: 12px;
+  float: left;
 }
 
-.matrix .row .matrix-value {
+.matrix .col .matrix-value {
   width: 35px;
   height: 35px;
   background: #616772;
-  margin-right: 12px;
+  margin-bottom: 12px;
   float: left;
   border-radius: 100%;
 }
 
-.matrix .row .matrix-value.selected {
+.matrix .col .matrix-value.selected {
   background-color: #F6A623;
 }
 
