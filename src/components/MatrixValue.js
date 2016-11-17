@@ -16,7 +16,17 @@ class MatrixValue extends Component {
   }
 
   getClassName() {
-    return this.state.on ? 'matrix-value selected' : 'matrix-value';
+    let classes = ['matrix-value'];
+
+    if (this.state.on) {
+      classes.push('selected');
+    }
+
+    if (this.props.seqCurrentStep == this.props.x && this.state.on) {
+      classes.push('active');
+    }
+
+    return classes.join(' ');
   }
 
   render() {

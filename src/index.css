@@ -78,10 +78,15 @@ button {
   margin-bottom: 12px;
   float: left;
   border-radius: 100%;
+  transition: background-color 0.3s ease;
 }
 
 .matrix .col .matrix-value.selected {
   background-color: #F6A623;
+}
+
+.matrix .col .matrix-value.active {
+  background-color: #C3FF3F;
 }
 
 section.envelope {
